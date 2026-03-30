@@ -1773,6 +1773,14 @@ p {
     padding-inline: 20px;
   }
 
+  .hero-actions .btn-whatsapp {
+    width: auto;
+    align-self: flex-start;
+    flex: 0 0 auto;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
   .btn-lg,
   .btn-whatsapp {
     width: 100%;
