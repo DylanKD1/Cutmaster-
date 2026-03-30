@@ -16,6 +16,13 @@ const WA_NUMBER = '491234567890';
 
   if (!navbar || !toggle || !mobileNav) return;
 
+  const setMenuState = (isOpen) => {
+    mobileNav.classList.toggle('open', isOpen);
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('menu-open', isOpen);
+  };
+
   /* Scroll: add .scrolled class once user scrolls past 20px */
   const onScroll = () => {
     navbar.classList.toggle('scrolled', window.scrollY > 20);
@@ -25,30 +32,28 @@ const WA_NUMBER = '491234567890';
 
   /* Mobile menu toggle */
   toggle.addEventListener('click', () => {
-    const isOpen = mobileNav.classList.toggle('open');
-    toggle.classList.toggle('open', isOpen);
-    toggle.setAttribute('aria-expanded', String(isOpen));
-    /* Prevent body scroll when menu is open */
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    const isOpen = !mobileNav.classList.contains('open');
+    setMenuState(isOpen);
   });
 
   /* Close mobile menu when a link is clicked */
   mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      mobileNav.classList.remove('open');
-      toggle.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+      setMenuState(false);
     });
   });
 
   /* Close mobile menu on resize to desktop */
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
-      mobileNav.classList.remove('open');
-      toggle.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+      setMenuState(false);
+    }
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileNav.classList.contains('open')) {
+      setMenuState(false);
+      toggle.focus();
     }
   });
 })();

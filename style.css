@@ -40,6 +40,7 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-height) + 12px);
 }
 
 body {
@@ -49,6 +50,10 @@ body {
   font-weight: 400;
   line-height: 1.7;
   overflow-x: hidden;
+}
+
+body.menu-open {
+  overflow: hidden;
 }
 
 img {
@@ -159,6 +164,8 @@ p {
   transition: var(--transition);
   text-decoration: none;
   white-space: nowrap;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn-primary {
@@ -365,6 +372,9 @@ p {
   opacity: 0;
   transition: opacity var(--transition), transform var(--transition);
   pointer-events: none;
+  max-height: calc(100svh - var(--nav-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .nav-mobile.open {
@@ -410,6 +420,7 @@ p {
   align-items: center;
   overflow: hidden;
   background-color: var(--bg-primary);
+  padding: calc(var(--nav-height) + 56px) 0 72px;
 }
 
 .hero-bg {
@@ -438,7 +449,6 @@ p {
   position: relative;
   z-index: 2;
   max-width: 760px;
-  padding-top: var(--nav-height);
 }
 
 .hero-eyebrow {
@@ -978,6 +988,7 @@ p {
 .contact-info-text span {
   font-size: 0.92rem;
   color: var(--text-secondary);
+  overflow-wrap: anywhere;
 }
 
 .contact-cta-side {
@@ -1232,6 +1243,7 @@ p {
   justify-content: space-between;
   padding-top: 16px;
   border-top: 1px solid var(--border);
+  gap: 12px;
 }
 
 .service-full-card-price {
@@ -1526,6 +1538,10 @@ p {
     --nav-height: 64px;
   }
 
+  .container {
+    width: min(100% - 32px, 1140px);
+  }
+
   .section {
     padding: 72px 0;
   }
@@ -1537,6 +1553,37 @@ p {
 
   .nav-toggle {
     display: flex;
+  }
+
+  .nav-mobile {
+    padding: 24px 16px 28px;
+  }
+
+  .nav-mobile a {
+    padding: 14px 0;
+  }
+
+  .hero {
+    min-height: auto;
+    align-items: flex-end;
+    padding: calc(var(--nav-height) + 40px) 0 56px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-sub {
+    max-width: 100%;
+    margin-bottom: 32px;
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 240px;
   }
 
   .about-grid {
@@ -1584,6 +1631,10 @@ p {
     padding: 36px 28px;
   }
 
+  .contact-info-item {
+    padding: 18px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 32px;
@@ -1600,7 +1651,11 @@ p {
   }
 
   .hero-badges {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+    padding-top: 28px;
   }
 
   .services-full-grid {
@@ -1622,10 +1677,80 @@ p {
   .page-hero {
     padding: 110px 0 56px;
   }
+
+  .final-cta-inner {
+    padding: 56px 0;
+  }
 }
 
-/* Small mobile: ≤ 480px */
+/* Narrow mobile: <= 640px */
+@media (max-width: 640px) {
+  .services-grid,
+  .why-grid,
+  .services-full-grid,
+  .footer-grid,
+  .gallery-grid,
+  .about-pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid > *:first-child,
+  .gallery-item:nth-child(1) {
+    grid-column: span 1;
+  }
+
+  .hero-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .service-full-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-cta-side {
+    padding: 30px 22px;
+  }
+
+  .faq-question {
+    padding: 20px;
+  }
+
+  .faq-answer-inner {
+    padding: 0 20px 20px;
+  }
+}
+
+/* Small mobile: <= 480px */
 @media (max-width: 480px) {
+  .container {
+    width: min(100% - 24px, 1140px);
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .divider,
+  .divider.center {
+    margin-bottom: 24px;
+  }
+
+  .hero {
+    padding: calc(var(--nav-height) + 28px) 0 44px;
+  }
+
+  .hero-eyebrow {
+    gap: 8px;
+    letter-spacing: 0.16em;
+    margin-bottom: 16px;
+  }
+
+  .hero-sub {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
   .services-grid {
     grid-template-columns: 1fr;
   }
@@ -1640,12 +1765,62 @@ p {
 
   .hero-actions {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   .hero-actions .btn {
     width: 100%;
-    justify-content: center;
+    padding-inline: 20px;
+  }
+
+  .btn-lg,
+  .btn-whatsapp {
+    width: 100%;
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+
+  .about-image-accent {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin-top: 16px;
+  }
+
+  .service-card,
+  .why-card,
+  .testimonial-card,
+  .service-full-card {
+    padding: 24px 20px;
+  }
+
+  .contact-info-item {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .contact-cta-side {
+    padding: 28px 20px;
+  }
+
+  .booking-card {
+    padding: 24px 16px;
+    margin-top: 36px;
+  }
+
+  .faq-list {
+    margin-top: 36px;
+  }
+
+  .faq-question-text {
+    font-size: 0.9rem;
+  }
+
+  .final-cta-inner {
+    padding: 44px 0;
   }
 
   .footer-grid {
@@ -1656,11 +1831,7 @@ p {
     grid-column: span 1;
   }
 
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .gallery-item:nth-child(1) {
-    grid-column: span 1;
+  .footer {
+    padding: 52px 0 24px;
   }
 }
